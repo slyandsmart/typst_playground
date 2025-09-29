@@ -1,0 +1,74 @@
+\documentclass[
+  type=PhD, % BA, MA, PhD, or Expose
+  lang=english, % english or german
+  study=Doktorat, % BauUmwelt, Bau, Umwelt, Mech, Elek, or Doktorat
+  uni=LFUI, % LFUI or UMIT
+  expose=true, % true or false; defaults to false
+  explanation=true, % true or false; set to false prior to printing!
+]{ftwthesis}
+
+% Modern LaTeX installations and editors can and should use unicode input
+% encoding.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Using bibtex or its successor biber is the recommended way to handle your
+% bibliography. You may use a bibliographystyle of your choice. This sample
+% document uses natbib and a numeric citation style. Another good and modern alternative is the biblatex package.
+\usepackage[numbers]{natbib}
+% \usepackage[authoryear,round]{natbib} % for author-year citations
+
+% Enter your data:
+\AuthorGivenName{Bettina}
+\AuthorFamilyname{Mayer}
+\AcademicTitlePre{Dipl.-Ing.} % Mag., Dipl.-Ing., etc.
+\AcademicTitlePost{BSc} % BA, MA, etc.
+\setboolean{AuthorFemale}{true} % true or false
+
+% Title, subtitle, and date (Month Year) of your thesis. Don't make titles
+% excessively long!
+\title{Title of dissertation (at most three lines!)}
+\Subtitle{Template for PhD Exposes at the Faculty of Engineering Sciences, University of Innsbruck}
+\date{\today}
+
+% End of blocking period if exclusion from use (``Sperre'') has been granted.
+% Leave empty, if exclusion from use has not been applied for or has not been
+% granted. Only applicable to Master or PhD theses.
+\publicafter{1. J\"anner 2020}
+
+% The (principal) advisor of your thesis.
+\Advisor{Univ.-Prof. Dr. Anke Bockreis}
+\AdvisorUniversity{Universität Innsbruck}
+\AdvisorDepartment{Institut für Infrastruktur}
+\AdvisorResearchUnit{Arbeitsbereich für Umwelttechnik}
+\setboolean{AdvisorFemale}{true}
+
+
+
+
+\begin{document}
+
+
+
+
+
+% Insert table of contents and clear page (optional)
+\tableofcontents\clearpage
+
+
+
+% If you wish, you may add more material such as a glossary or a list of abbreviations.
+
+% Here comes the main part of your expose.
+
+% Replace the text until >>>END with the actual contents of your thesis. The next line is only there to produce some meaningless text, a short usage info and citations for the list of references.
+\FTWBlindDocument
+% >>>END
+
+
+% The bibliography. Using bibtex (or the modern alternative biber in conjunction with the biblatex package) is highly recommended but not compulsory.
+\bibliographystyle{plainnat}
+\bibliography{ftwthesis} % replace with your own bibtex-database
+
+\end{document}
+

@@ -1,0 +1,89 @@
+\documentclass[
+  type=BA, % BA, MA, PhD, or Expose
+  lang=german, % english or german
+  study=Mech, % BauUmwelt, Bau, Umwelt, Mech, Elek, or Doktorat
+  uni=LFUI, % LFUI or UMIT
+  expose=false, % true or false; defaults to false
+  explanation=true, % true or false; set to false prior to printing!
+  specialization=BBP, % BBP, KIB, MOS, EEG, GVW, or UVW; only applicable to MA Bau or MA Umwelt
+]{ftwthesis}
+
+% Modern LaTeX installations and editors can and should use unicode input
+% encoding.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Using bibtex or its successor biber is the recommended way to handle your
+% bibliography. You may use a bibliographystyle of your choice. This sample
+% document uses natbib and a numeric citation style. Another good and modern alternative is the biblatex package.
+\usepackage[numbers]{natbib}
+% \usepackage[authoryear,round]{natbib} % for author-year citations
+
+% Enter your data:
+\AuthorGivenName{Bettina}
+\AuthorFamilyname{Mayer}
+\AcademicTitlePre{} % Mag., Dipl.-Ing., etc.
+\AcademicTitlePost{BSc} % BA, MA, etc.
+\setboolean{AuthorFemale}{true} % true or false
+
+% Title, subtitle, and date (Month Year) of your thesis. Don't make titles
+% excessively long!
+\title{Titel der Bachelorarbeit (maximal drei Zeilen!)}
+\Subtitle{Vorlage für Bachelorarbeiten an der Fakultät für Technische Wissenschaften, Universität Innsbruck}
+\date{\today}
+
+
+% The (principal) advisor of your thesis. This is necessary for all thesis types (BA, MA, or PhD).
+\Advisor{Univ.-Prof. Dr. Anke Bockreis}
+\AdvisorUniversity{Universität Innsbruck}
+\AdvisorDepartment{Institut für Infrastruktur}
+\AdvisorResearchUnit{Arbeitsbereich für Umwelttechnik}
+\setboolean{AdvisorFemale}{true}
+
+
+
+
+\begin{document}
+
+
+\begin{Acknowledgment}
+  \ifthenelse{\boolean{langGerman}}
+  {Optional. Falls dieser Abschnitt nicht erwünscht ist, einfach löschen oder
+  leer lassen.}
+  {Optional. If not needed, just delete or leave empty.}
+\end{Acknowledgment}
+
+\begin{Kurzfassung}
+  Kurzfassung Ihrer Arbeit in deutscher Sprache. Verpflichtend!
+\end{Kurzfassung}
+
+\begin{Abstract}
+  Abstract of your thesis in English. Compulsory!
+\end{Abstract}
+
+% Insert table of contents and clear page (or double page in case of MA or PhD theses)
+\tableofcontents\clearpage
+
+% Delete next line if you do not have figures.
+\listoffigures\clearpage
+
+% Delete next line if you do not have tables.
+\listoftables\clearpage
+
+% If you wish, you may add more material such as a glossary or a list of abbreviations.
+
+
+% Replace the text until >>>END with the actual contents of your thesis. The next line is only there to produce some meaningless text, a short usage info and citations for the list of references.
+\FTWBlindDocument
+% >>>END
+
+% Uncomment, if you want to have an appendix.
+% \appendix
+% \chapter{Appendix chapter title.}
+
+% The bibliography. Using bibtex (or the modern alternative biber in conjunction with the biblatex package) is highly recommended but not compulsory.
+\bibliographystyle{plainnat}
+\bibliography{ftwthesis} % replace with your own bibtex-database
+
+\end{document}
+

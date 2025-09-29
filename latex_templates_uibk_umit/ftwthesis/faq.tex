@@ -1,0 +1,62 @@
+\clearpage
+\section{Frequently Asked Questions}
+
+\subsection*{Eine bereits verwendete Vorlage für Abschlussarbeiten funktioniert nicht mehr.}
+
+Eine m\"ogliche Ursache ist der Wechsel der zugrunde liegenden Dokumentklasse
+von \verb|memoir| auf \verb|KOMA-Script| mit Version 2.0 (Sommer 2022).
+
+\subsection*{Wie kann ich den Satzspiegel ändern?}
+
+Der durch die Klasse vorgegebene Satzspiegel hat historische Gründe, ist aus
+typographischer Sicht nicht optimal und sollte geändert werden. Er kann zum
+Beispiel mit Hilfe des Pakets \verb|geometry| einfach angepasst werden.
+Allerdings benötigt es Geschmack und Expert:innenwissen, um zu einer guten
+Einstellung zu gelangen. Eine einfachere Methode, die im Normalfall zu guten
+Ergebnissen führt, besteht im Aufruf von \verb|\typearea[BCOR]{DIV}| in der
+Dokumentpräambel. Dabei ist \verb|BCOR| eine Länge zur Bindekorrektur für die
+gedruckte Version Ihrer Arbeit (\verb|0mm|, falls Ihre Arbeit nicht gedruckt
+wird) und \verb|DIV| ein natürliche Zahl, zum Beispiel
+\begin{verbatim}
+  \typearea[8mm]{12}
+\end{verbatim}
+\cite{kohm20}. Beachten Sie, dass Masterarbeiten und Dissertationen im
+Normalfall doppelseitig gedruckt werden. Deshalb werden dort ein innerer und ein
+äußerer Rand unterschieden.
+
+\subsection*{Eine lange Kapitel\"uberschrift verursacht Probleme mit dem
+  Zeilenumbruch in der Kopfzeile.}
+
+Geben Sie eine optionale Kurzversion der Kapitel\"uberschrift an:
+\begin{verbatim}
+\chapter[Kurze Kapitel\"uberschrift]{Eine laaaaaaaaaaaaange
+Kapitel\"uberschrift, die Probleme mit dem Zeilenumbruch verursacht}
+\end{verbatim}
+Beachten Sie, dass die Kurzversion auch in Inhaltsverzeichnis aufscheint.
+
+\subsection*{Wie soll ich Artikel in meine kumulative Dissertation einbinden?}
+
+Verwenden Sie das Paket \verb|pdfpages|:
+\begin{verbatim}
+\usepackage{pdfpages}
+...
+\includepdf[pages=-]{mein-artikel.pdf}
+\end{verbatim}
+Eventuell wollen Sie diesen Artikel auch ins Inhaltsverzeichnis aufnehmen:
+\begin{verbatim}
+\includepdf[pages=-,%
+    pagecommand={%
+        \phantomsection%
+        \addcontentsline{toc}%
+                        {section}%
+                        {Titel f\"ur das Inhaltsverzeichnis}}]%
+    {mein-artikel.pdf}
+\end{verbatim}
+
+\subsection*{Das Literaturverzeichnis ist Deutsch obwohl meine Dokumentsprache
+  English ist!}
+
+Dieses Verhalten tritt auf, wenn Sie ein Exposé in englischer Sprache schreiben
+und zum Erzeugen des Literaturverzeichnisses das Paket \verb|biblatex|
+verwenden. Ein Workaround ist, direkt nach \verb|\begin{document}| den Befehl
+  \verb|\selectlanguage{english}| einzufügen.
