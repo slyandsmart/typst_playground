@@ -19,7 +19,8 @@
 #lorem(20)
 
 = Next first  header 
-Some text. 
+Some text. Hallo realy stupid to write something here.
+In the included Preview this works fine.
 
 == Second Header 
 Some text with bullet points.
