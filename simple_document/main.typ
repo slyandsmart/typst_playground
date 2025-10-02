@@ -9,7 +9,6 @@
 
 = Introduction
 #lorem(10)
-
 + The climate
   - Temperature
   - Precipitation
@@ -21,6 +20,19 @@
 = Next first  header 
 Some text. Hallo realy stupid to write something here.
 In the included Preview this works fine.
+Here i will use some equations:
+$ F = m dot a $
+$ alpha = sin(gamma)$
+
+#import "@preview/mitex:0.2.5": *
+
+#mitex(`
+  \newcommand{\f}[2]{#1f(#2)}
+  \f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+`)
+
 
 == Second Header 
 Some text with bullet points.
