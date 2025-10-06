@@ -21,7 +21,7 @@
 Some text. Hallo realy stupid to write something here.
 In the included Preview this works fine.
 Here i will use some equations:
-$ F = m dot a $
+$ F = m dot a 
 $ alpha = sin(gamma)$
 
 #import "@preview/mitex:0.2.5": *
