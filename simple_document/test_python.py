@@ -1,5 +1,7 @@
 import numpy as np 
 
+
+
 def tangent_point_on_line(Px, v, C):
     """
     Tangency point of the circle centered at C to the line L: Px + u*v.
@@ -23,12 +25,17 @@ def tangent_point_on_line(Px, v, C):
     return T
 EPS = 1e-12
 
-def _unit(v):
+def unit_vector(v):
     v = np.asarray(v, dtype=float)
     n = np.linalg.norm(v)
     if n < EPS:
         raise ValueError("Zero-length direction.")
     return v / n
+
+
+
+
+
 
 def circle_tangent_to_two_lines(Px, v1, v2, *,
                                 which="internal",
@@ -60,8 +67,8 @@ def circle_tangent_to_two_lines(Px, v1, v2, *,
       the radius is r = s * sin(theta/2), where theta is the angle between v1 and v2.
     """
     Px = np.asarray(Px, float)
-    u1 = _unit(v1)
-    u2 = _unit(v2)
+    u1 = unit_vector(v1)
+    u2 = unit_vector(v2)
 
     # angle between directions
     dot = np.clip(u1 @ u2, -1.0, 1.0)
@@ -180,12 +187,12 @@ def check_min_point(p1,p2,Px):
     if np.linalg.norm(dis_p1) < np.linalg.norm(dis_p2):
         return mindis, p1
     else:
-        return mindis, p2    
+        return mindis, p2
 
-    return mindis
 
+################################## Start example 
 p1 = np.array([0.0, 0.0])
-p2 = np.array([-6.0, 7.0])
+p2 = np.array([-6.0, 8.0])
 
 distance = p1 - p2
 
@@ -206,35 +213,53 @@ mindis, p = check_min_point(p1, p2, Px)
 
 print('mindis: ', mindis)
 
-
-# circle center is on normalvector of p1 with distance mindis
-if distance[1] < 0:
-    circle_center = p1 + (mindis) * normal_vectors(vp1)[0] / np.linalg.norm(normal_vectors(vp1)[0])
-    th1s = 180
-    th2s = 270
-else:       
-    circle_center = p1 + (mindis) * normal_vectors(vp1)[1] / np.linalg.norm(normal_vectors(vp1)[1])
-    th1s = 90
-    th2s = 180
-
-
 v1 = p1 - Px
 v2 = p2 - Px
+
+# Add two points in direction of the vectors of p1 and p2 with a distance of lin_length = 1
+n = 600
+lin_length = 2.0
+p1_end = p1 + lin_length * np.array(vp1) / np.linalg.norm(vp1)
+p2_end = p2 - lin_length * np.array(vp2) / np.linalg.norm(vp2)
+line1 = np.linspace(p1_end, p1, n//4, endpoint=False)
+line2 = np.linspace(p2, p2_end, n//4, endpoint=True)
+
 # Option A: circle tangent to both lines and passing through p1
 circle_center, r = circle_tangent_to_two_lines(Px, v1, v2, which="internal", p_on_circle=p1)
 
 # Option B: circle tangent to both lines with a chosen radius
 # C, r = circle_tangent_to_two_lines(Px, v1, v2, which="internal", radius=2.0)
 
-
 # Tangency point on the second line (through p2):
 T2 = tangent_point_on_line(Px, v2, circle_center)
 
 
-# Add two points in direction of the vectors of p1 and p2 with a distance of lin_length = 1
-lin_length = 2.5
-p1_end = p1 + lin_length * np.array(vp1) / np.linalg.norm(vp1)
-p2_end = p2 - lin_length * np.array(vp2) / np.linalg.norm(vp2)
+
+
+if distance[1] < 0:
+    th1s = 180
+    th2s = 270
+    # x, y points of the circle_arc
+    x_arc = [circle_center[0] + r * np.cos(np.radians(angle)) for angle in range(th1s, th2s)]
+    y_arc = [circle_center[1] + r * np.sin(np.radians(angle)) for angle in range(th1s, th2s)]
+
+    arc = np.array([x_arc, y_arc]).T   
+    all_points = np.vstack((line2, arc, line1))
+else:
+    th1s = 90
+    th2s = 180
+    # x, y points of the circle_arc
+    x_arc = [circle_center[0] + r * np.cos(np.radians(angle)) for angle in range(th1s, th2s)]
+    y_arc = [circle_center[1] + r * np.sin(np.radians(angle)) for angle in range(th1s, th2s)]
+
+    arc = np.array([x_arc, y_arc]).T   
+    all_points = np.vstack((line1, arc, line2))
+
+
+
+
+
+
 
 
 
@@ -259,41 +284,17 @@ ax.text(Px[0], Px[1], 'Px', fontsize=12, ha='right')
 ax.text(T2[0], T2[1], 'T2', fontsize=12, ha='right')
 ax.text(p1_end[0], p1_end[1], 'p1_end', fontsize=12, ha='left')
 ax.text(p2_end[0], p2_end[1], 'p2_end', fontsize=12, ha='right')
-
-circle = patches.Circle((circle_center[0], circle_center[1]), r, fill=False, color='b', linestyle='--')
-circle_arc = patches.Arc((circle_center[0], circle_center[1]), 2*r, 2*r, angle=0,
-                                theta1=th2s, theta2=th1s, color='r', linestyle='--')
-# x, y points of the circle_arc
-x_arc = [circle_center[0] + r * np.cos(np.radians(angle)) for angle in range(th1s, th2s)]
-y_arc = [circle_center[1] + r * np.sin(np.radians(angle)) for angle in range(th1s, th2s)]
-ax.plot(x_arc, y_arc, 'g--')
-
 # line from px to p1 and from px to p2
 ax.plot([Px[0], p1[0]], [Px[1], p1[1]], 'r--')
 ax.plot([Px[0], p2[0]], [Px[1], p2[1]], 'b--')
-ax.add_patch(circle)
+circle = patches.Circle((circle_center[0], circle_center[1]), r, fill=False, color='b', linestyle='--')
+# ax.add_patch(circle)
 
+ax.plot(all_points[:, 0], all_points[:, 1], 'g-')
 ax.set_aspect('equal')
 ax.set_xlim(-10, 20)
 ax.set_ylim(-10, 20)
-# plt.grid()
-# plt.show()
-# fig, ax = plt.subplots()
-# Now create with new plot figure 
-# one single numpy array  from p1_ent to p2_end with n points in it following the arc of the circle combined with the two line segments
-n = 600
-line1 = np.linspace(p1_end, p1, n//4, endpoint=False)
-line2 = np.linspace(p2, p2_end, n//4, endpoint=True)
-arc = np.array([ (circle_center[0] + r * np.cos(np.radians(angle)),
-                  circle_center[1] + r * np.sin(np.radians(angle))) 
-                 for angle in range(th2s, th1s, (th1s-th2s)//(n//2))])
-points = np.vstack((line1, arc, line2))
-print('points shape: ', points.shape)
-print('points: ', points)   
 
-ax.plot(points[:,0], points[:,1], 'g-')
-ax.set_aspect('equal')   
-ax.set_xlim(-10, 20)
-ax.set_ylim(-10, 20)
+
 plt.grid()
 plt.show()
